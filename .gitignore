@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
+# Ignore Python cache files
 __pycache__/
-
+*.pyc
 
 # Distribution / packaging
 build/
