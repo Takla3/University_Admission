@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'django_filters',
+    'drf_yasg',
 
     'rest_framework',
     'django_extensions',
@@ -81,7 +82,7 @@ WSGI_APPLICATION = 'UNIVERSITY_ADMISSION.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-      'default': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'UNIVERSITY_ADMISSION',
         'USER': 'postgres',
@@ -135,8 +136,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'Student.UserAccount'
 GRAPH_MODELS = {
-  'all_applications': True,
-  'group_models': True,
+    'all_applications': True,
+    'group_models': True,
 }
 
 REST_FRAMEWORK = {
