@@ -37,6 +37,10 @@ class MajorList(generics.ListCreateAPIView):
         'governorate_id__name',
         'governorate_id',
         'min_pass_grade',
+        'certificate_type_id',
+        'certificate_type_id__type',
+        'admission_type_id',
+        'admission_type_id__type',
     ]
     ordering_fields = [
         'governorate_id__name',

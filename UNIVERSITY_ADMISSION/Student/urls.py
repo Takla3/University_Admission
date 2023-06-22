@@ -1,6 +1,10 @@
-from django.urls import include, path
-from Student.views import StudentCertificationMarksViewSet
+"""
+url
+"""
+
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from Student.views import StudentCertificationMarksViewSet
 
 router = DefaultRouter()
 router.register(
@@ -8,7 +12,12 @@ router.register(
     StudentCertificationMarksViewSet,
     basename='student_certificate_details',
 )
-urlpatterns = [
-    path('', include(router.urls)),
 
+
+urlpatterns = [
+    
+    path('', include(router.urls)),
+    
 ]
+
+print(router.urls)
