@@ -39,6 +39,13 @@ class CertificateTypeSerializer(serializers.ModelSerializer):
 # get the marks of each  major and the minimum pass grade
 
 
+class AdmissionTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AdmissionType
+        fields = '__all__'
+
+
 class MajorMarkSerializer(serializers.ModelSerializer):
     mark_name = serializers.CharField(
         source='mark_id.mark',
@@ -87,6 +94,10 @@ class MajorSerializer(serializers.ModelSerializer):
         read_only=True,
         source='certificate_type_id',
     )
+    admission_type = CertificateTypeSerializer(
+        read_only=True,
+        source='admission_type_id',
+    )
 
     class Meta:
         model = Majors
@@ -100,6 +111,7 @@ class MajorSerializer(serializers.ModelSerializer):
             'considered_marks',
             'certificate_type',
             'governorate',
+            'admission_type',
 
         )
 

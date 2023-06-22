@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from Admission.models import MajorMark, consideredMarks
+from Admission.models import MajorMark, consideredMarks,AdmissionType
 
 from .models import *
 
