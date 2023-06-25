@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-csb$g#045d!uw30e)&*5!5_sxm*gvqa3rg($q&#iu1k!kbx9kj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOST = ['*']
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
 
 # Application definition
 
@@ -98,14 +98,14 @@ WSGI_APPLICATION = 'UNIVERSITY_ADMISSION.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get("DB_NAME"),
-        'USER': os.environ.get("DB_USER"),
-        'PASSWORD': os.environ.get("DB_PASSWORD"),
-        'HOST': os.environ.get("DB_HOST"),
-        'PORT': os.environ.get("DB_PORT"),
-    }
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get("DB_NAME"),
+#         'USER': os.environ.get("DB_USER"),
+#         'PASSWORD': os.environ.get("DB_PASSWORD"),
+#         'HOST': os.environ.get("DB_HOST"),
+#         'PORT': os.environ.get("DB_PORT"),
+#     }
 }
 
 

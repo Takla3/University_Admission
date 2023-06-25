@@ -11,3 +11,25 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+# Ignore compiled Python files
+*.pyc
+
+# Ignore the virtual environment directory
+venv/
+
+# Ignore the development database
+db.sqlite3
+
+# Ignore media files
+media/
+
+# Ignore static files
+static/
+
+# Ignore log files
+*.log
+
+# Ignore secret keys and settings files
+*.key
+*.secret
+settings_local.py
