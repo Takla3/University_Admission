@@ -1,6 +1,6 @@
 {
     
-  "version": 2,
+//   "version": 2,
     "builds": [{
         "src": "UNIVERSITY_ADMISSION/wsgi.py",
         "use": "@vercel/python",
@@ -8,28 +8,20 @@
             "maxLambdaSize": "15mb",
              "runtime": "python3.9"
             
-             },
-        "env": {
-                "DJANGO_SETTINGS_MODULE": "UNIVERSITY_ADMISSION.settings"
-              },
-        "commands": [
-                "python manage.py collectstatic --noinput"
-              ],
-        "output": {
-                "dir": "staticfiles_build"
-              }
+             }
+       
           
-    },
-    {
-        "src": "build_files.sh",
-        "use": "@vercel/static-build",
-        "config": { "distDir": "staticfiles_build" }
     }],
+    // {
+    //     "src": "build_files.sh",
+    //     "use": "@vercel/static-build",
+    //     "config": { "distDir": "staticfiles_build" }
+    // }],
     "routes": [
-        {
-            "src": "/static/(.*)",
-            "dest": "/static/$1"
-        },
+        // {
+        //     "src": "/static/(.*)",
+        //     "dest": "/static/$1"
+        // },
         {
             "src": "/(.*)",
             "dest": "UNIVERSITY_ADMISSION/wsgi.py"
