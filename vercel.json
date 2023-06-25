@@ -1,4 +1,6 @@
 {
+    
+  "version": 2,
     "builds": [{
         "src": "UNIVERSITY_ADMISSION/wsgi.py",
         "use": "@vercel/python",
