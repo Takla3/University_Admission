@@ -8,10 +8,7 @@
             "maxLambdaSize": "15mb",
              "runtime": "python3.9"
             
-             }, 
-        "env": {
-                  "PG_CONFIG": "/usr/bin/pg_config"
-                }
+             }
           
     },
     {
