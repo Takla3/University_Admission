@@ -97,7 +97,7 @@ WSGI_APPLICATION = 'UNIVERSITY_ADMISSION.wsgi.application'
 # }
 
 
-# DATABASES = {
+DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': os.environ.get("DB_NAME"),
@@ -106,7 +106,7 @@ WSGI_APPLICATION = 'UNIVERSITY_ADMISSION.wsgi.application'
 #         'HOST': os.environ.get("DB_HOST"),
 #         'PORT': os.environ.get("DB_PORT"),
 #     }
-# }
+}
 
 
 # Password validation
