@@ -8,7 +8,16 @@
             "maxLambdaSize": "15mb",
              "runtime": "python3.9"
             
-             }
+             },
+        "env": {
+                "DJANGO_SETTINGS_MODULE": "UNIVERSITY_ADMISSION.settings"
+              },
+        "commands": [
+                "python manage.py collectstatic --noinput"
+              ],
+        "output": {
+                "dir": "staticfiles_build"
+              }
           
     },
     {
