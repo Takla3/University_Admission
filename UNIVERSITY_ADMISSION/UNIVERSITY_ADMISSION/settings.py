@@ -29,7 +29,8 @@ SECRET_KEY = 'django-insecure-csb$g#045d!uw30e)&*5!5_sxm*gvqa3rg($q&#iu1k!kbx9kj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh','127.0.0.1']
+ALLOWED_HOSTS = ['https://university-admission.vercel.app/admin',
+                 '.vercel.app', '.now.sh', '127.0.0.1']
 
 # Application definition
 
@@ -40,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'corsheaders',
     'django_filters',
     'drf_yasg',
 
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -96,12 +98,12 @@ WSGI_APPLICATION = 'UNIVERSITY_ADMISSION.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 # DATABASES = {
 # #     'default': {
 # #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -149,11 +151,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles', 'static')
 
 
-MEDIA_URLS ='/media/'
+MEDIA_URLS = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
@@ -183,3 +185,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # STATIC_URL = "static/"
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+CORS_ORIGIN_ALLOW_ALL = True
