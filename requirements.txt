@@ -49,3 +49,5 @@ tzdata==2023.3
 uritemplate==4.1.1
 urllib3==2.0.3
 wrapt==1.15.0
+psycopg2-binary>=2.8.6
+postgresql-client
