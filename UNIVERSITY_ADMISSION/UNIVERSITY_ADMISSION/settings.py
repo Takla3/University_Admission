@@ -13,8 +13,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+import environ
+
 from dotenv import load_dotenv
 load_dotenv()
+
+env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,13 +28,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-csb$g#045d!uw30e)&*5!5_sxm*gvqa3rg($q&#iu1k!kbx9kj'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['https://university-admission.vercel.app/admin',
-                 '.vercel.app', '.now.sh', '127.0.0.1']
+                 '.vercel.app', '.now.sh', '127.0.0.1', '*']
 
 # Application definition
 
@@ -115,7 +119,13 @@ WSGI_APPLICATION = 'UNIVERSITY_ADMISSION.wsgi.application'
 # #     }
 # }
 
-
+DATABASES = {
+    'default': dj_database_url.config(
+        # Feel free to alter this value to suit your needs.
+        default=env('DB_URL'),
+        conn_max_age=600
+    )
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -151,8 +161,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
-STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles', 'static')
+# STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles', 'static')
 
 
 MEDIA_URLS = '/media/'
