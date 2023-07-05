@@ -4,7 +4,7 @@ set -o errexit
 
 poetry install
 
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-python manage.py collectstatic --no-input
-python manage.py migrate
+/opt/render/project/src/.venv/bin/python -m pip install --upgrade pip
+/opt/render/project/src/.venv/bin/python -m pip install -r requirements.txt
+/opt/render/project/src/.venv/bin/python manage.py collectstatic --no-input
+/opt/render/project/src/.venv/bin/python manage.py migrate
