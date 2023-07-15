@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'Admission',
     'Student',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
