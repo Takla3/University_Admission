@@ -29,7 +29,7 @@ schema_view = get_schema_view(
         #  version of the swagger doc
         default_version='v1',
         # first line that appears on the top of the doc
-        description="Test description",
+        # description="Test description",
     ),
     public=True,
 )
