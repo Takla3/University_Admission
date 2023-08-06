@@ -16,7 +16,9 @@ from .models import (
     Status,
     MinValueValidator,
     MaxValueValidator,
+  
 )
+from Student.models import   RequiredDocuments
 
 
 # get the name of the governorate from Governorate class to use it in major list
@@ -132,3 +134,18 @@ class MajorSerializer(serializers.ModelSerializer):
     def get_gender(self, obj):
         return str(Gender(obj.gender))
         # return GENDER_CHOICES.get(obj.gender)
+
+class MinMajorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Majors
+        fields = (
+            'id',
+            'name',
+        )
+class RequiredDocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RequiredDocuments
+        fields = (
+            'Document_Id',
+            'Document_Name',
+        )

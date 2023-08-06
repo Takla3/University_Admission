@@ -3,33 +3,26 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import generics
 from .models import Majors
-from .serializers import MajorSerializer
+from .serializers import MajorSerializer, MinMajorSerializer, RequiredDocumentSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
+from rest_framework import filters
+import django_filters
+from rest_framework.response import Response
+from Student.models import RequiredDocuments
+# class MajorFilter(django_filters.FilterSet):
+#     min_pass_grade__lte = django_filters.NumberFilter(field_name='min_pass_grade', lookup_expr='lte')
 
-# import django_filters
-
-# class ReplacementFilter(django_filters.FilterSet):
-#     start_date = DateFilter(
-#         field_name='start_date',
-#         lookup_expr='gte',
-#         widget=DateInput(attrs={'type': 'date'})  # 🖘 specify widget
-#     )
-#     end_date = DateFilter(
-#         field_name='end_date',
-#         lookup_expr='lte',
-#         widget=DateInput(attrs={'type': 'date'})  # 🖘 specify widget
-#     )
-
-#     class Meta:
-#         model = Replacement
-#         fields = ['start_date', 'end_date']
+    # class Meta:
+    #     model = Majors
+    #     fields = ['min_pass_grade__lte', 'certificate_type_id','admission_type_id']
 
 
-class MajorList(generics.ListCreateAPIView):
+class MajorList(generics.ListAPIView):
     queryset = Majors.objects.all()
     serializer_class = MajorSerializer
     filter_backends = [
+        # MajorFilter,
         DjangoFilterBackend,
         OrderingFilter,
     ]
@@ -49,3 +42,26 @@ class MajorList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         return super().get_queryset()
+
+class FilteredMajorList(generics.ListAPIView):
+
+    def list(self, request, *args, **kwargs):
+        min_pass_grade=self.request.query_params.get('min_pass_grade')
+        admission_type_id=self.request.query_params.get('admission_type_id')
+        certificate_type_id=self.request.query_params.get('certificate_type_id')
+        majors= Majors.objects.filter(
+            min_pass_grade__lte=min_pass_grade,
+            admission_type_id=admission_type_id,
+            certificate_type_id=certificate_type_id,
+        )
+        majors_serializer = MinMajorSerializer(data=majors,many=True)
+        majors_serializer.is_valid()
+        
+        required_documents=RequiredDocuments.objects.filter(Admission_Type_Id=admission_type_id)
+        required_document_serializer = RequiredDocumentSerializer(data=required_documents,many=True)
+        required_document_serializer.is_valid()
+        data={
+            'majors':majors_serializer.data,
+            'required_documents':required_document_serializer.data,
+        }
+        return Response(data)

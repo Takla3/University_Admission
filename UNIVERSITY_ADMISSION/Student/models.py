@@ -27,7 +27,7 @@ class Student(models.Model) :
       
 class Certificate (models.Model):
       id =models.AutoField(primary_key=True)
-      certificate_num =models.IntegerField()
+      certificate_num =models.IntegerField(null=True)
       seat_number=models.IntegerField(unique=True)
       total_marks=models.IntegerField()
       certificate_type_id=models.ForeignKey(CertificateType,on_delete=models.CASCADE)
@@ -46,14 +46,14 @@ class CertificationMarks(models.Model):
   
     
 class Admission(models.Model) :
-    id=models.AutoField(primary_key=True)
-    admission_type_id=models.ForeignKey(AdmissionType,on_delete=models.CASCADE)
-    certificate_student_id=models.ForeignKey(Certificate,on_delete=models.CASCADE)
-    student_id=models.ForeignKey(Student, on_delete=models.CASCADE)
-    language_id=models.ForeignKey(Language,on_delete=models.CASCADE)
-    admission_num=models.IntegerField()
-    status_id=models.ForeignKey(Status, on_delete=models.CASCADE)
-    
+      id=models.AutoField(primary_key=True)
+      admission_type_id=models.ForeignKey(AdmissionType,on_delete=models.CASCADE)
+      certificate_student_id=models.ForeignKey(Certificate,on_delete=models.CASCADE,related_name="certificate_admission")
+      student_id=models.ForeignKey(Student, on_delete=models.CASCADE)
+      language_id=models.ForeignKey(Language,on_delete=models.CASCADE)
+      admission_num=models.IntegerField(null=True)
+      status_id=models.ForeignKey(Status, on_delete=models.CASCADE)
+
 class AdmissionDesire(models.Model):
     id=models.AutoField(primary_key=True)
     major_id=models.ForeignKey(Majors,on_delete=models.CASCADE)
