@@ -2,6 +2,9 @@
 
 from rest_framework import serializers
 
+from Student.models import AdmissionDesire,Student
+from Student.models import Certificate
+
 from .models import (
     GENDER_CHOICES,
     Majors,
@@ -149,3 +152,4 @@ class RequiredDocumentSerializer(serializers.ModelSerializer):
             'Document_Id',
             'Document_Name',
         )
+

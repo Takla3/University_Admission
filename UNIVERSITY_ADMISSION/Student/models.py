@@ -57,9 +57,10 @@ class Admission(models.Model) :
 class AdmissionDesire(models.Model):
     id=models.AutoField(primary_key=True)
     major_id=models.ForeignKey(Majors,on_delete=models.CASCADE)
-    admission_id=models.ForeignKey(Admission,on_delete=models.CASCADE)
+    admission_id=models.ForeignKey(Admission,on_delete=models.CASCADE,related_name='admission_desire_set')
     priority=models.IntegerField()
-    
+
+
 class RequiredDocuments(models.Model):
     Id=models.AutoField(primary_key=True)
     Admission_Type_Id=models.ForeignKey(AdmissionType,on_delete=models.CASCADE)
@@ -72,25 +73,3 @@ class AdmissionRequirements(models.Model):
     admission_id=models.ForeignKey(Admission,on_delete=models.CASCADE)
     document=models.ImageField()
     valid=models.BooleanField()
-    
-
-
-    
-    
-    
-    
-    
-    
-
-    
-
-    
-
-    
-
-    
-    
-    
-
-    
-    

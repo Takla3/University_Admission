@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from .models import Student,Certificate,CertificationMarks,Admission
+from .models import Student, Certificate, CertificationMarks, Admission
 from .models import *
 
-class StudentSerializer(serializers.ModelSerializer):
+
+class StudentNameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
@@ -10,7 +11,7 @@ class StudentSerializer(serializers.ModelSerializer):
             'first_name',
             'middle_name',
             'last_name',
-            )
+        )
 
 # class CertificateSerializer(serializers.ModelSerializer):
 #     Total_Mark = serializers.IntegerField(
@@ -26,47 +27,52 @@ class StudentSerializer(serializers.ModelSerializer):
 
 class CertificationMarksSerializer(serializers.ModelSerializer):
     mark_name = serializers.CharField(
-        source = 'mark_id.mark',
+        source='mark_id.mark',
     )
+
     class Meta:
         model = CertificationMarks
         fields = (
             'mark_name',
             'score',
-            )
+        )
+
 
 class StudentCertificationMarksSerializer(serializers.ModelSerializer):
-    student = StudentSerializer(
-        source = 'student_id',
-        read_only = True,
+    student = StudentNameSerializer(
+        source='student_id',
+        read_only=True,
     )
     marks = serializers.SerializerMethodField(
-        read_only = True,
+        read_only=True,
     )
+
     class Meta:
         model = Certificate
         fields = (
             'student',
             'marks',
             'total_marks',
-            )
+        )
 
     def get_marks(self, obj):
         serializer = CertificationMarksSerializer(
             obj.marks_certificate_set,
-            many= True,
+            many=True,
         )
         return serializer.data
-    
-    
-class StartAdmissionSerializer(serializers.Serializer):
-    total_marks=serializers.IntegerField(write_only=True)
-    governorate_id=serializers.IntegerField(write_only=True)
-    seat_number=serializers.IntegerField(write_only=True)
-    certificate_type_id=serializers.IntegerField(write_only=True)
 
-    admission_type_id=serializers.PrimaryKeyRelatedField(queryset=AdmissionType.objects.all())
-    language_id=serializers.PrimaryKeyRelatedField(queryset=Language.objects.all())
+
+class PostAdmissionSerializer(serializers.Serializer):
+    total_marks = serializers.IntegerField(write_only=True)
+    governorate_id = serializers.IntegerField(write_only=True)
+    seat_number = serializers.IntegerField(write_only=True)
+    certificate_type_id = serializers.IntegerField(write_only=True)
+
+    admission_type_id = serializers.PrimaryKeyRelatedField(
+        queryset=AdmissionType.objects.all())
+    language_id = serializers.PrimaryKeyRelatedField(
+        queryset=Language.objects.all())
 
     class Meta:
         model = Admission
@@ -82,29 +88,116 @@ class StartAdmissionSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         print(attrs)
-        total_marks=attrs.pop('total_marks')
-        governorate_id=attrs.pop('governorate_id')
-        seat_number=attrs.pop('seat_number')
-        certificate_type_id=attrs.pop('certificate_type_id')
-        
+        total_marks = attrs.pop('total_marks')
+        governorate_id = attrs.pop('governorate_id')
+        seat_number = attrs.pop('seat_number')
+        certificate_type_id = attrs.pop('certificate_type_id')
+
         certificate_obj = Certificate.objects.filter(
             seat_number=seat_number,
             certificate_type_id=certificate_type_id,
             governorate_id=governorate_id,
             total_marks=total_marks,
         ).first()
-        
-        if not certificate_obj:
-            raise serializers.ValidationError({"message":"invalid data"})
 
-        attrs['certificate_student_id']=certificate_obj
-        attrs['student_id']=certificate_obj.student_id
-        attrs['status_id']=Status.objects.all().first()
+        if not certificate_obj:
+            raise serializers.ValidationError({"message": "invalid data"})
+
+        attrs['certificate_student_id'] = certificate_obj
+        attrs['student_id'] = certificate_obj.student_id
+        attrs['status_id'] = Status.objects.all().first()
         return super().validate(attrs)
 
     def create(self, validated_data):
         admission_obj = Admission.objects.create(**validated_data)
         return admission_obj
-    
+
     def to_representation(self, instance):
-        return {'message':'success'}
+        return {'id': instance.id}
+
+# ------------------------------------------------
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(source='user_id__email')
+
+    class Meta:
+        model = Student
+        fields = (
+            'id',
+            'first_name',
+            'middle_name',
+            'last_name',
+            'birth_date',
+            'national_id',
+            'email',
+            # 'mother_name',
+            # 'gender',
+        )
+
+
+class CertificateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Certificate
+        fields = (
+            'total_marks',
+            'seat_number',
+            'student_id',
+        )
+
+
+class AdmissionDesireSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AdmissionDesire
+        fields = (
+            'id',
+            'major_id',
+            'admission_id',
+            'priority',
+        )
+
+
+class StartAdmissionSerializer(serializers.Serializer):
+    admission_desires = serializers.ListSerializer(
+        child=AdmissionDesireSerializer(),
+    )
+    # Admission desire data
+    # major_ids = serializers.ListSerializer()
+    # admission_id = serializers.IntegerField()
+    # priority = serializers.IntegerField()
+
+    # Student data
+    first_name = serializers.CharField(max_length=30)
+    middle_name = serializers.CharField(max_length=30)
+    last_name = serializers.CharField(max_length=30)
+    birth_date = serializers.DateField()
+    national_id = serializers.IntegerField()
+    email = serializers.CharField(max_length=30)
+
+    # Certification data
+    seat_number = serializers.IntegerField()
+    total_marks = serializers.IntegerField()
+    student_id = serializers.IntegerField()
+
+    # class Meta:
+    #     fields = (
+    #         # Admission data
+    #         'major_id',
+    #         'admission_id',
+    #         'priority',
+
+    #         # Student data
+    #         'first_name',
+    #         'middle_name',
+    #         'last_name',
+    #         'birth_date',
+    #         'national_id',##
+    #         'email',
+
+    #         # Certification data
+    #         'total_marks',
+    #         'seat_number',
+    #         'student_id',
+    #     )
