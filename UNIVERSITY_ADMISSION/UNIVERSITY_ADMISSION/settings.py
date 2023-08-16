@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'Admission',
     'Student',
-   
+
     'whitenoise.runserver_nostatic',
 ]
 
@@ -65,7 +65,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'UNIVERSITY_ADMISSION.urls'
@@ -199,9 +199,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
 
-DEBUG=True
-if  DEBUG:
+DEBUG = True
+if DEBUG:
 
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'taklazidanziadn@gmail.com'
+EMAIL_HOST_PASSWORD = 'eyntgunrysipwned'
+EMAIL_USE_TLS = True

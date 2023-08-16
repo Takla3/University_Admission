@@ -1,19 +1,18 @@
 from django.http import Http404
 from django.shortcuts import render
-from rest_framework import generics
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework import mixins
 from Student.serializers import StudentCertificationMarksSerializer
-from Student.models import Certificate
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.parsers import JSONParser
 from Student.serializers import PostAdmissionSerializer
-from Student.models import Admission, Student, RequiredDocuments, AdmissionDesire
-from .serializers import DocumentSerializer, StartAdmissionSerializer, StatusDesiresSerializer, StudentSerializer, AdmissionDesireSerializer, StatusAdmissionSerializer
+from Student.models import Admission, Student, RequiredDocuments, AdmissionDesire, Certificate, AdmissionRequirements
+from .serializers import AdmissionRequirementsSerializer, DocumentSerializer, StartAdmissionSerializer, StatusDesiresSerializer, StudentSerializer, AdmissionDesireSerializer, StatusAdmissionSerializer
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class StudentCertificationMarksViewSet(
@@ -61,8 +60,6 @@ class StartAdmissionViewSet(GenericViewSet):
     # parser_classes = JSONParser
 
     def handle_exception(self, exc):
-        print('lsslsssssssssssssssss')
-        print(type(exc))
         if isinstance(exc, Http404):
             return Response({"message": str(exc)}, status=status.HTTP_404_NOT_FOUND)
         if isinstance(exc, ObjectDoesNotExist):
@@ -139,3 +136,12 @@ class StatusDesiresViewSet(GenericViewSet):
         print(admission_desire_serializer.data)
 
         return Response(admission_desire_serializer.data)
+
+
+class AdmissionRequirementsViewSet(
+    mixins.CreateModelMixin,
+    GenericViewSet,
+):
+    serializer_class = AdmissionRequirementsSerializer
+    queryset = AdmissionRequirements.objects.all()
+    parser_classes = [MultiPartParser, FormParser]

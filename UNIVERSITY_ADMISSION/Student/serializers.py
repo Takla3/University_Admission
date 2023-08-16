@@ -1,6 +1,8 @@
+from django.core.mail import send_mail
 from rest_framework import serializers
 from .models import Student, Certificate, CertificationMarks, Admission
 from .models import *
+from django.conf import settings
 
 
 class StudentNameSerializer(serializers.ModelSerializer):
@@ -222,3 +224,36 @@ class StatusDesiresSerializer(serializers.Serializer):
     admission_desires = AdmissionDesireSerializer(many=True)
 
     # -----------------------------------------------------
+
+
+class AdmissionRequirementsSerializer(serializers.ModelSerializer):
+    admission_id = serializers.PrimaryKeyRelatedField(
+        queryset=Admission.objects.all())
+    document_id = serializers.PrimaryKeyRelatedField(
+        queryset=RequiredDocuments.objects.all())
+    document = serializers.FileField()
+
+    class Meta:
+        model = AdmissionRequirements
+        fields = (
+            'admission_id',
+            'document_id',
+            'document',
+        )
+
+    def create(self, validated_data):
+        admission_requirements_instance = super().create(validated_data)
+        admission_instance = validated_data['admission_id']
+        admission_instance.admission_num = admission_requirements_instance.id
+
+        # student_id=admission_instance.student_id.user_id.email
+        email = admission_instance.student_id.user_id.email
+        send_mail(
+            'Admission Number',
+            f'this is your admission number {admission_instance.id}',
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=False,
+        )
+
+        return admission_requirements_instance

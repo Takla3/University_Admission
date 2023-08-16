@@ -1,3 +1,4 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from Admission.models import Governorate, CertificateType, Marks, AdmissionType, Language, Status, Majors
@@ -78,10 +79,23 @@ class RequiredDocuments(models.Model):
     Document_Name = models.CharField(max_length=30)
 
 
+def upload_profile_image_location(instance, filename, **kwargs):
+    file_path = '/'.join(['images', filename])
+
+    return file_path
+
+
 class AdmissionRequirements(models.Model):
     id = models.AutoField(primary_key=True)
     document_id = models.ForeignKey(
         RequiredDocuments, on_delete=models.CASCADE)
     admission_id = models.ForeignKey(Admission, on_delete=models.CASCADE)
-    document = models.ImageField()
-    valid = models.BooleanField()
+    document = models.FileField(
+        default=None,
+        null=True,
+        blank=True,
+        upload_to=upload_profile_image_location,
+        validators=[FileExtensionValidator(
+            allowed_extensions=['jpeg', 'jpg', 'png'])]
+    )
+    valid = models.BooleanField(default=False)
