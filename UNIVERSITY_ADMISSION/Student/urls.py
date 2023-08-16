@@ -5,7 +5,7 @@ url
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from Student.views import StudentCertificationMarksViewSet
-from Student.views import PostAdmissionViewSet, StartAdmissionViewSet, StatusDesiresViewSet
+from Student.views import PostAdmissionViewSet, StartAdmissionViewSet, StatusDesiresViewSet, AdmissionRequirementsViewSet
 
 router = DefaultRouter()
 router.register(
@@ -17,6 +17,11 @@ router.register(
     'post-admission',
     PostAdmissionViewSet,
     basename='post-admission',
+)
+router.register(
+    'upload-required-documents',
+    AdmissionRequirementsViewSet,
+    basename='upload-required-documents',
 )
 
 urlpatterns = [
