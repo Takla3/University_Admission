@@ -151,16 +151,23 @@ class CertificateSerializer(serializers.ModelSerializer):
 
 class AdmissionDesireSerializer(serializers.ModelSerializer):
     major_name = serializers.CharField(source="major_id.name")
+    governorate_name = serializers.CharField(
+        source="major_id.governorate_id.name")
 
     class Meta:
         model = AdmissionDesire
         fields = (
-            # 'id',
             'major_id',
             'admission_id',
             'priority',
             'major_name',
+            'governorate_name',
         )
+
+    def create(self, validated_data):
+        validated_data.pop(governorate_name)
+        validated_data.pop(major_name)
+        return super().create(validated_data)
 
 
 class StartAdmissionSerializer(serializers.Serializer):
@@ -184,7 +191,6 @@ class StartAdmissionSerializer(serializers.Serializer):
     # Certification data
     seat_number = serializers.IntegerField()
     total_marks = serializers.IntegerField()
-    student_id = serializers.IntegerField()
     admission_id = serializers.IntegerField()
 
 
