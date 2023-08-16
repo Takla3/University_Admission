@@ -53,7 +53,7 @@ class CertificationMarks(models.Model):
 class Admission(models.Model):
     id = models.AutoField(primary_key=True)
     admission_type_id = models.ForeignKey(
-        AdmissionType, on_delete=, related_name='admission_type')
+        AdmissionType, on_delete=models.CASCADE, related_name='admission_type')
     certificate_student_id = models.ForeignKey(
         Certificate, on_delete=models.CASCADE, related_name="certificate_admission")
     student_id = models.ForeignKey(
