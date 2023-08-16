@@ -231,7 +231,7 @@ class AdmissionRequirementsSerializer(serializers.ModelSerializer):
         queryset=Admission.objects.all())
     document_id = serializers.PrimaryKeyRelatedField(
         queryset=RequiredDocuments.objects.all())
-    documents = serializers.ListSerializer(child=serializers.FileField())
+    documents = serializers.FileField()
 
     class Meta:
         model = AdmissionRequirements
