@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "API",
+            "type": "python",
+            "request": "launch",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "python": "${command:python.interpreterPath}",
+            "program": "${workspaceRoot}/University_Admission/manage.py",
+            "cwd": "${workspaceRoot}",
+            "args": [
+                "runserver",
+                "0.0.0.0:8000",
+                "--noreload",
+                "--nothreading"
+            ],
+            "django": true,
+            "justMyCode": false
+        }
+    ]
+}

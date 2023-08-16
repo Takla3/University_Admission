@@ -5,19 +5,30 @@ url
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from Student.views import StudentCertificationMarksViewSet
+from Student.views import PostAdmissionViewSet, StartAdmissionViewSet, StatusDesiresViewSet
 
 router = DefaultRouter()
 router.register(
-    'student_certificate_details',
+    'student-certificate-details',
     StudentCertificationMarksViewSet,
-    basename='student_certificate_details',
+    basename='student-certificate-details',
+)
+router.register(
+    'post-admission',
+    PostAdmissionViewSet,
+    basename='post-admission',
 )
 
-
 urlpatterns = [
-    
+    path(
+        'start-admission/',
+        StartAdmissionViewSet.as_view({'post': 'start_admission'}),
+        name='start-admission',
+    ),
+    path(
+        'get-status-desires/',
+        StatusDesiresViewSet.as_view({'post': 'get_status_desires'}),
+        name='get-status-desires',
+    ),
     path('', include(router.urls)),
-    
 ]
-
-print(router.urls)
