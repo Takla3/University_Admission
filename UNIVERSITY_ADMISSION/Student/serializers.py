@@ -148,26 +148,29 @@ class CertificateSerializer(serializers.ModelSerializer):
 
 
 class AdmissionDesireSerializer(serializers.ModelSerializer):
+    major_name = serializers.CharField(source="major_id.name")
 
     class Meta:
         model = AdmissionDesire
         fields = (
-            'id',
+            # 'id',
             'major_id',
             'admission_id',
             'priority',
+            'major_name',
         )
 
 
 class StartAdmissionSerializer(serializers.Serializer):
-    admission_desires = serializers.ListSerializer(
-        child=AdmissionDesireSerializer(),
-    )
+    # admission_desires = serializers.ListSerializer(
+    #     child=AdmissionDesireSerializer(),
+    # )
     # Admission desire data
     # major_ids = serializers.ListSerializer()
     # admission_id = serializers.IntegerField()
     # priority = serializers.IntegerField()
 
+    admission_desires = AdmissionDesireSerializer(many=True)
     # Student data
     first_name = serializers.CharField(max_length=30)
     middle_name = serializers.CharField(max_length=30)
@@ -180,24 +183,42 @@ class StartAdmissionSerializer(serializers.Serializer):
     seat_number = serializers.IntegerField()
     total_marks = serializers.IntegerField()
     student_id = serializers.IntegerField()
+    admission_id = serializers.IntegerField()
 
-    # class Meta:
-    #     fields = (
-    #         # Admission data
-    #         'major_id',
-    #         'admission_id',
-    #         'priority',
 
-    #         # Student data
-    #         'first_name',
-    #         'middle_name',
-    #         'last_name',
-    #         'birth_date',
-    #         'national_id',##
-    #         'email',
+class DocumentSerializer(serializers.ModelSerializer):
 
-    #         # Certification data
-    #         'total_marks',
-    #         'seat_number',
-    #         'student_id',
-    #     )
+    class Meta:
+        model = RequiredDocuments
+        fields = (
+            'Id',
+            'Document_Name',
+            'Document_Id',
+        )
+
+
+# ----------------------------------------------------------------
+
+
+class StatusAdmissionSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    admission_num = serializers.IntegerField()
+    # desire = serializers.SerializerMethodField(read_only=True)
+
+    # def validate(self, attrs):
+
+
+class AdmissionStatusSerializer(serializers.ModelSerializer):
+    status_name = serializers.CharField(source='status_id.name')
+
+    class Meta:
+        model = Admission
+        fields = ('status_id', 'status_name')
+#    AdmissionDesireSerializer
+
+
+class StatusDesiresSerializer(serializers.Serializer):
+    admission_status = AdmissionStatusSerializer()
+    admission_desires = AdmissionDesireSerializer(many=True)
+
+    # -----------------------------------------------------

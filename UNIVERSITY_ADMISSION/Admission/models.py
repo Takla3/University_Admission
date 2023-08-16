@@ -24,10 +24,16 @@ class Governorate(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=40)
 
+    # def __str__(self):
+    #     return self.name
+
 
 class CertificateType(models.Model):
     id = models.AutoField(primary_key=True)
     type = models.CharField(max_length=40)
+
+    # def __str__(self):
+    #     return self.type
 
 
 class Marks(models.Model):
@@ -38,10 +44,16 @@ class Marks(models.Model):
         on_delete=models.CASCADE,
     )
 
+    # def __str__(self):
+    #     return f"{self.mark} {self.certificate_type_id}"
+
 
 class AdmissionType(models.Model):
     id = models.IntegerField(primary_key=True)
     type = models.CharField(max_length=30)
+
+    # def __str__(self):
+    #     return self.type
 
 
 class Majors(models.Model):
@@ -73,6 +85,9 @@ class Majors(models.Model):
         decimal_places=2
     )
 
+    # def __str__(self):
+    #     return self.name
+
 
 class MajorMark(models.Model):
     mark_id = models.ForeignKey(
@@ -88,6 +103,9 @@ class MajorMark(models.Model):
         max_digits=6,
         decimal_places=2,
     )
+
+    # def __str__(self):
+    #     return f"{self.mark_id.mark} {self.major_id.name}"
 
 
 class consideredMarks(models.Model):
@@ -110,7 +128,13 @@ class Language(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)
 
+    # def __str__(self):
+    #     return self.name
+
 
 class Status(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)
+
+    # def __str__(self):
+    #     return self.name

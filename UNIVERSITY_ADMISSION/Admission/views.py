@@ -19,7 +19,9 @@ class MajorFilter(django_filters.FilterSet):
     class Meta:
         model = Majors
         fields = ['min_pass_grade__lte',
-                  'certificate_type_id', 'admission_type_id']
+                  'certificate_type_id',
+                  'admission_type_id',
+                  'year']
 
 
 class MajorList(generics.ListAPIView):

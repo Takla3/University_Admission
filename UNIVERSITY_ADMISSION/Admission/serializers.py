@@ -2,7 +2,7 @@
 
 from rest_framework import serializers
 
-from Student.models import AdmissionDesire,Student
+from Student.models import AdmissionDesire, Student
 from Student.models import Certificate
 
 from .models import (
@@ -19,9 +19,9 @@ from .models import (
     Status,
     MinValueValidator,
     MaxValueValidator,
-  
+
 )
-from Student.models import   RequiredDocuments
+from Student.models import RequiredDocuments
 
 
 # get the name of the governorate from Governorate class to use it in major list
@@ -138,13 +138,23 @@ class MajorSerializer(serializers.ModelSerializer):
         return str(Gender(obj.gender))
         # return GENDER_CHOICES.get(obj.gender)
 
+
 class MinMajorSerializer(serializers.ModelSerializer):
+    governorate_name = serializers.CharField(
+        source="governorate_id.name",
+        read_only=True
+    )
+
     class Meta:
         model = Majors
         fields = (
             'id',
             'name',
+            'governorate_id',
+            'governorate_name',
         )
+
+
 class RequiredDocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequiredDocuments
@@ -152,4 +162,3 @@ class RequiredDocumentSerializer(serializers.ModelSerializer):
             'Document_Id',
             'Document_Name',
         )
-
