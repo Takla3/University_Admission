@@ -231,14 +231,14 @@ class AdmissionRequirementsSerializer(serializers.ModelSerializer):
         queryset=Admission.objects.all())
     document_id = serializers.PrimaryKeyRelatedField(
         queryset=RequiredDocuments.objects.all())
-    documents = serializers.FileField()
+    document = serializers.FileField()
 
     class Meta:
         model = AdmissionRequirements
         fields = (
             'admission_id',
             'document_id',
-            'documents',
+            'document',
         )
 
     def create(self, validated_data):
