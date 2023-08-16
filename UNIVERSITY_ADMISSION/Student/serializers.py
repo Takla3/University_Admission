@@ -242,7 +242,6 @@ class AdmissionRequirementsSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        print()
         admission_requirements_instance = super().create(validated_data)
         admission_instance = validated_data['admission_id']
         admission_instance.admission_num = admission_requirements_instance.id
