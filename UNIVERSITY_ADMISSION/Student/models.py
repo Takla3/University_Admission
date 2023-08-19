@@ -8,7 +8,6 @@ from Admission.models import Governorate, CertificateType, Marks, AdmissionType,
 
 class UserAccount(AbstractUser):
     id = models.AutoField(primary_key=True)
-    # password=models.CharField(max_length=25)
     avatar = models.ImageField()
     role = models.BooleanField(default=True)
 

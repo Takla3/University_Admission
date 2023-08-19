@@ -38,21 +38,6 @@ class PostAdmissionViewSet(
 
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     self.perform_create(serializer)
-    #     return serializer.data['id']
-
-    # def start_admission(self, request, *args, **kwargs):
-    #     admission_id = self.create_admission(request, *args, **kwargs)
-
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-
-    #     total_marks = serializer.data['total_marks']
-    #     certificate_type_id = serializer.data['certificate_type_id']
-
-    #     admission_type_id = serializer.data['admission_type_id']
 
 
 class StartAdmissionViewSet(GenericViewSet):
@@ -92,7 +77,6 @@ class StartAdmissionViewSet(GenericViewSet):
         desire_serializer.is_valid(raise_exception=True)
         desire_serializer.save()
 
-        # documents_data.is_valid()
         return Response({"data": "Success"})
 
 
@@ -129,11 +113,7 @@ class StatusDesiresViewSet(GenericViewSet):
             'admission_status': admission_obj,
             'admission_desires': admission_desire
         }
-        # print(dict)
         admission_desire_serializer = StatusDesiresSerializer(dict)
-        # admission_desire_serializer.is_valid()
-
-        print(admission_desire_serializer.data)
 
         return Response(admission_desire_serializer.data)
 

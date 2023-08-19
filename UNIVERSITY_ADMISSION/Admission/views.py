@@ -57,15 +57,8 @@ class FilteredMajorList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend]
 
     def list(self, request, *args, **kwargs):
-        # min_pass_grade=self.request.query_params.get('min_pass_grade')
         admission_type_id = self.request.query_params.get(
             'admission_type_id', 1)
-        # certificate_type_id=self.request.query_params.get('certificate_type_id')
-        # majors= Majors.objects.filter(
-        #     min_pass_grade__lte=min_pass_grade,
-        #     admission_type_id=admission_type_id,
-        #     certificate_type_id=certificate_type_id,
-        # )
         majors = self.filter_queryset(self.get_queryset())
         majors_serializer = MinMajorSerializer(data=majors, many=True)
         majors_serializer.is_valid()

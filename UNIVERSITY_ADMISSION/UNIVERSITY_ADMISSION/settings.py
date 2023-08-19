@@ -180,6 +180,7 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.OrderingFilter',
     ),
+    # 'DEFAULT_PERMISSION_CLASSES': (),
 }
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
